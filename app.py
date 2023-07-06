@@ -7,8 +7,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DB_URL')
 db = SQLAlchemy(app)
 
 group_permissions = db.Table('group_permissions',
-                             db.Column('group_id', db.Integer, db.ForeignKey('group.id'), primary_key=True),
-                             db.Column('permission_id', db.Integer, db.ForeignKey('permission.id'), primary_key=True)
+                             db.Column('group_id', db.Integer, db.ForeignKey('groups.id'), primary_key=True),
+                             db.Column('permission_id', db.Integer, db.ForeignKey('permissions.id'), primary_key=True)
                              )
 
 
@@ -64,7 +64,14 @@ class AccessLevels(db.Model):
     permission_id = db.Column(db.Integer, db.ForeignKey('permissions.id'))
 
 
-db.create_all()
+with app.app_context():
+    db.create_all()
+
+
+# Create a test route
+@app.route('/test', methods=['GET'])
+def test():
+    return make_response(jsonify({'message': 'test route'}), 200)
 
 
 # Add a new company
@@ -72,7 +79,7 @@ db.create_all()
 def create_user():
     try:
         data = request.get_json()
-        new_company = Companies(username=data['username'], email=data['email'])
+        new_company = Companies(name=data['name'])
         db.session.add(new_company)
         db.session.commit()
         return make_response(jsonify({'message': 'company created'}), 201)
