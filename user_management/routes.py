@@ -8,10 +8,6 @@ from user_management.models import \
     Permission
 
 
-#def check_fields(expected_fields, data)
-
-
-
 # Create a test route
 @app.route('/test', methods=['GET'])
 def test():
@@ -19,7 +15,7 @@ def test():
 
 
 # Add a new company
-@app.route('/company', methods=['POST'])
+@app.route('/add_company', methods=['POST'])
 def create_company():
     data = request.get_json()
     new_company = Company(name=data['name'])
@@ -29,7 +25,7 @@ def create_company():
 
 
 # Add a new permission group
-@app.route('/group', methods=['POST'])
+@app.route('/add_group', methods=['POST'])
 def create_group():
     data = request.get_json()
     if len(data['permissions']) == 0:
@@ -47,7 +43,7 @@ def create_group():
 
 
 # Add a new user
-@app.route('/user', methods=['POST'])
+@app.route('/add_user', methods=['POST'])
 def create_user():
     data = request.get_json()
     company = Company.query.filter_by(name=data['company']).one()
@@ -74,4 +70,4 @@ def edit_user():
 def list_users():
     user_info = User.query.all()
     user_list_dict = [user.obj_to_dict() for user in user_info]
-    return make_response(jsonify(user_list_dict))
+    return make_response(jsonify(user_list_dict), 200)
