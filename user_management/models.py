@@ -24,13 +24,19 @@ class User(db.Model):
             raise ValueError("failed email validation")
         return username
 
+    def obj_to_dict(self):
+        return {
+            "id": self.id,
+            "username": self.username,
+            "company": self.company,
+            "group": self.group
+        }
+
 
 class Group(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
     users = db.relationship('User', backref='users', lazy=True)
-#    permissions = db.relationship('Permission', secondary=group_permissions, lazy='subquery',
-#                                  backref=db.backref('groups', lazy=True))
     permissions = db.relationship('Permission', secondary=group_permissions, backref=db.backref('perms'))
 
     @validates('name')
