@@ -21,6 +21,7 @@ ENV VIRTUAL_ENV=/app/.venv \
 
 COPY --from=builder ${VIRTUAL_ENV} ${VIRTUAL_ENV}
 COPY app.py ./app.py
+COPY user_management ./user_management
 
 EXPOSE 4000
 
