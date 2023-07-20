@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "user-management"
+version = "0.1.0"
+description = ""
+authors = ["Yiannis Galanakis"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+flask = "^2.3.2"
+psycopg2-binary = "^2.9.6"
+flask-sqlalchemy = "^3.0.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
