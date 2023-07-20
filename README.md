@@ -49,6 +49,6 @@ TODO:
 
 1. Add error handling for informative error messages
 2. Improve pagination on list-users. Currently only page 1 is returned
-3. ADd unit testing to routes
-4. Deploy to production
+3. Add unit testing to routes
+4. Deploy to cloud instance
 5. Create Views to display specific table combinations
