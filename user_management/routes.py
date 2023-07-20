@@ -16,7 +16,7 @@ def test():
 
 # Add a new company
 @app.route('/add_company', methods=['POST'])
-def create_company():
+def add_company():
     data = request.get_json()
     new_company = Company(name=data['name'])
     db.session.add(new_company)
@@ -26,7 +26,7 @@ def create_company():
 
 # Add a new permission group
 @app.route('/add_group', methods=['POST'])
-def create_group():
+def add_group():
     data = request.get_json()
     if len(data['permissions']) == 0:
         raise Exception('no permission names specified')
@@ -44,7 +44,7 @@ def create_group():
 
 # Add a new user
 @app.route('/add_user', methods=['POST'])
-def create_user():
+def add_user():
     data = request.get_json()
     company = Company.query.filter_by(name=data['company']).one()
     group = Group.query.filter_by(name=data['group']).one()
