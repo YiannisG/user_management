@@ -66,8 +66,18 @@ def edit_user():
 
 
 # list of users
-@app.route('/list_users', methods=['GET'])
+@app.route('/list_users/', methods=['GET'])
 def list_users():
-    user_info = User.query.all()
-    user_list_dict = [user.obj_to_dict() for user in user_info]
-    return make_response(jsonify(user_list_dict), 200)
+    page = request.args.get("page", 1)
+    per_page = request.args.get("per-page", 20)
+    users = User.query.paginate(page=page, per_page=per_page)
+    results = {
+        "results": [user.obj_to_dict() for user in users],
+        "pagination": {
+            "count": users.total,
+            "page": page,
+            "per_page": per_page,
+            "pages": users.pages,
+        },
+    }
+    return make_response(jsonify(results), 200)
