@@ -1,3 +1,5 @@
+import os
+
 from user_management import app, db
 
 from user_management.models import \
